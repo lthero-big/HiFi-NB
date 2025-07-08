@@ -1,4 +1,4 @@
-# HiFi-NB
+# HiFi-Mark
 
 "High-Fidelity Universal Watermarking for Images : A Latent Space Approach with Noise Blending"
 
