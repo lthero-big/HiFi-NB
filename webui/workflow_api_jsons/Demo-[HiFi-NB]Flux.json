@@ -1,0 +1,616 @@
+{
+  "PicWidth": {
+    "inputs": {
+      "value": 1024
+    },
+    "class_type": "INTConstant",
+    "_meta": {
+      "title": "INT Constant-width"
+    }
+  },
+  "PicHeight": {
+    "inputs": {
+      "value": 1024
+    },
+    "class_type": "INTConstant",
+    "_meta": {
+      "title": "INT Constant-height"
+    }
+  },
+  "152": {
+    "inputs": {
+      "unet_name": "flux1-dev-fp8.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Load Diffusion Model"
+    }
+  },
+  "154": {
+    "inputs": {
+      "clip_name1": "t5xxl_fp16.safetensors",
+      "clip_name2": "clip_l.safetensors",
+      "type": "flux"
+    },
+    "class_type": "DualCLIPLoader",
+    "_meta": {
+      "title": "DualCLIPLoader"
+    }
+  },
+  "155": {
+    "inputs": {
+      "vae_name": "ae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE"
+    }
+  },
+  "160": {
+    "inputs": {
+      "width": [
+        "PicWidth",
+        0
+      ],
+      "height": [
+        "PicHeight",
+        0
+      ],
+      "batch_size": 1
+    },
+    "class_type": "EmptyLatentImage",
+    "_meta": {
+      "title": "Empty Latent Image"
+    }
+  },
+  "178": {
+    "inputs": {
+      "use_seed": 1,
+      "seed": 42,
+      "key": [
+        "Key",
+        0
+      ],
+      "nonce": [
+        "Nonce",
+        0
+      ],
+      "message": [
+        "WatermarkMessage",
+        0
+      ],
+      "latent_channels": 16,
+      "window_size": [
+        "215",
+        0
+      ],
+      "init_latent": [
+        "First_stpes",
+        0
+      ]
+    },
+    "class_type": "DPR_Latent",
+    "_meta": {
+      "title": "DPR Latent"
+    }
+  },
+  "179": {
+    "inputs": {
+      "key": [
+        "Key",
+        0
+      ],
+      "nonce": [
+        "Nonce",
+        0
+      ],
+      "message": [
+        "WatermarkMessage",
+        0
+      ],
+      "message_length": 1,
+      "window_size": [
+        "215",
+        0
+      ],
+      "watermarkMethod": "DPRW",
+      "latents": [
+        "224",
+        0
+      ]
+    },
+    "class_type": "DPR_Extractor",
+    "_meta": {
+      "title": "DPR Extractor"
+    }
+  },
+  "184": {
+    "inputs": {
+      "text": [
+        "PicPrompts",
+        0
+      ],
+      "clip": [
+        "154",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "191": {
+    "inputs": {
+      "text": "",
+      "clip": [
+        "154",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "Key": {
+    "inputs": {
+      "string": "5822ff9cce6772f714192f43863f6bad1bf54b78326973897e6b66c3186b77a7"
+    },
+    "class_type": "StringConstant",
+    "_meta": {
+      "title": "Key"
+    }
+  },
+  "Nonce": {
+    "inputs": {
+      "string": "05072fd1c2265f6f2e2a4080a2bfbdd8"
+    },
+    "class_type": "StringConstant",
+    "_meta": {
+      "title": "Nonce"
+    }
+  },
+  "215": {
+    "inputs": {
+      "value": 1
+    },
+    "class_type": "INTConstant",
+    "_meta": {
+      "title": "Window-Size"
+    }
+  },
+  "Inversion_stpes": {
+    "inputs": {
+      "scheduler": "ddim_uniform",
+      "steps": 3,
+      "denoise": 1,
+      "model": [
+        "152",
+        0
+      ]
+    },
+    "class_type": "BasicScheduler",
+    "_meta": {
+      "title": "BasicScheduler"
+    }
+  },
+  "223": {
+    "inputs": {
+      "sigmas": [
+        "Inversion_stpes",
+        0
+      ]
+    },
+    "class_type": "FlipSigmas",
+    "_meta": {
+      "title": "FlipSigmas"
+    }
+  },
+  "224": {
+    "inputs": {
+      "add_noise": true,
+      "noise_seed": 75328007767453,
+      "cfg": 1,
+      "model": [
+        "152",
+        0
+      ],
+      "positive": [
+        "191",
+        0
+      ],
+      "negative": [
+        "191",
+        0
+      ],
+      "sampler": [
+        "226",
+        0
+      ],
+      "sigmas": [
+        "223",
+        0
+      ],
+      "latent_image": [
+        "227",
+        0
+      ]
+    },
+    "class_type": "SamplerCustom",
+    "_meta": {
+      "title": "SamplerCustom"
+    }
+  },
+  "226": {
+    "inputs": {},
+    "class_type": "SamplerInversedEulerNode",
+    "_meta": {
+      "title": "Inversed Euler Sampler"
+    }
+  },
+  "227": {
+    "inputs": {
+      "pixels": [
+        "368",
+        0
+      ],
+      "vae": [
+        "155",
+        0
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE Encode"
+    }
+  },
+  "239": {
+    "inputs": {
+      "text": [
+        "179",
+        0
+      ],
+      "text2": ""
+    },
+    "class_type": "ShowText|pysssss",
+    "_meta": {
+      "title": "OriginalMessage in binary"
+    }
+  },
+  "240": {
+    "inputs": {
+      "text": [
+        "179",
+        1
+      ],
+      "text2": ""
+    },
+    "class_type": "ShowText|pysssss",
+    "_meta": {
+      "title": "ExtractedMessage in binary"
+    }
+  },
+  "ExtractedMessage": {
+    "inputs": {
+      "text": [
+        "179",
+        2
+      ],
+      "text2": ""
+    },
+    "class_type": "ShowText|pysssss",
+    "_meta": {
+      "title": "ExtractedMessage"
+    }
+  },
+  "BitAccuracy": {
+    "inputs": {
+      "text": [
+        "179",
+        3
+      ],
+      "text2": ""
+    },
+    "class_type": "ShowText|pysssss",
+    "_meta": {
+      "title": "BitAccuracy"
+    }
+  },
+  "243": {
+    "inputs": {
+      "text": [
+        "178",
+        1
+      ],
+      "text2": ""
+    },
+    "class_type": "ShowText|pysssss",
+    "_meta": {
+      "title": "Message length"
+    }
+  },
+  "secondSampler": {
+    "inputs": {
+      "use_dprw_noise": "enable",
+      "add_noise": "disable",
+      "noise_seed": 42,
+      "steps": 3,
+      "cfg": 1,
+      "sampler_name": "dpmpp_2m",
+      "scheduler": "karras",
+      "start_at_step": 0,
+      "end_at_step": 10000,
+      "denoise": 0.51,
+      "return_with_leftover_noise": "disable",
+      "model": [
+        "152",
+        0
+      ],
+      "positive": [
+        "191",
+        0
+      ],
+      "negative": [
+        "191",
+        0
+      ],
+      "latent_image": [
+        "First_stpes",
+        0
+      ],
+      "watermarked_latent_noise": [
+        "178",
+        0
+      ]
+    },
+    "class_type": "DPR_KSamplerAdvanced",
+    "_meta": {
+      "title": "DPR KSampler Advanced"
+    }
+  },
+  "326": {
+    "inputs": {
+      "image1": [
+        "368",
+        0
+      ],
+      "image2": [
+        "471",
+        0
+      ]
+    },
+    "class_type": "DPR_ImageQualityMetrics",
+    "_meta": {
+      "title": "DPR Image Quality Metrics"
+    }
+  },
+  "PSNR": {
+    "inputs": {
+      "text": [
+        "326",
+        0
+      ],
+      "text2": ""
+    },
+    "class_type": "ShowText|pysssss",
+    "_meta": {
+      "title": "PSNR"
+    }
+  },
+  "SSIM": {
+    "inputs": {
+      "text": [
+        "326",
+        1
+      ],
+      "text2": ""
+    },
+    "class_type": "ShowText|pysssss",
+    "_meta": {
+      "title": "SSIM"
+    }
+  },
+  "MSE": {
+    "inputs": {
+      "text": [
+        "326",
+        2
+      ],
+      "text2": "MSE: 24.60"
+    },
+    "class_type": "ShowText|pysssss",
+    "_meta": {
+      "title": "MSE"
+    }
+  },
+  "368": {
+    "inputs": {
+      "samples": [
+        "secondSampler",
+        0
+      ],
+      "vae": [
+        "155",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "First_stpes": {
+    "inputs": {
+      "use_dprw_noise": "disable",
+      "add_noise": "enable",
+      "noise_seed": [
+        "PicSeed",
+        0
+      ],
+      "steps": 12,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "normal",
+      "start_at_step": 0,
+      "end_at_step": 10000,
+      "denoise": 1,
+      "return_with_leftover_noise": "disable",
+      "model": [
+        "152",
+        0
+      ],
+      "positive": [
+        "184",
+        0
+      ],
+      "negative": [
+        "191",
+        0
+      ],
+      "latent_image": [
+        "160",
+        0
+      ],
+      "watermarked_latent_noise": [
+        "160",
+        0
+      ]
+    },
+    "class_type": "DPR_KSamplerAdvanced",
+    "_meta": {
+      "title": "DPR KSampler Advanced"
+    }
+  },
+  "471": {
+    "inputs": {
+      "samples": [
+        "First_stpes",
+        0
+      ],
+      "vae": [
+        "155",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "PicSeed": {
+    "inputs": {
+      "seed": 701518002384194
+    },
+    "class_type": "Seed Generator",
+    "_meta": {
+      "title": "Seed Generator"
+    }
+  },
+  "493": {
+    "inputs": {
+      "samples": [
+        "178",
+        0
+      ],
+      "vae": [
+        "155",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "WatermarkMessage": {
+    "inputs": {
+      "width": [
+        "PicWidth",
+        0
+      ],
+      "height": [
+        "PicHeight",
+        0
+      ],
+      "prompt": [
+        "PicPrompts",
+        0
+      ],
+      "author_name": "lthero",
+      "author_id": "02025LTHERO",
+      "model_name": "flux",
+      "seed": [
+        "PicSeed",
+        0
+      ]
+    },
+    "class_type": "DPR_MetadataGenerator",
+    "_meta": {
+      "title": "DPR Metadata Generator"
+    }
+  },
+  "PicPrompts": {
+    "inputs": {
+      "text": ""
+    },
+    "class_type": "Text Multiline",
+    "_meta": {
+      "title": "Text Multiline"
+    }
+  },
+  "500": {
+    "inputs": {
+      "text": [
+        "WatermarkMessage",
+        0
+      ],
+      "text2": ""
+    },
+    "class_type": "ShowText|pysssss",
+    "_meta": {
+      "title": "C2PA_Metadata(json)"
+    }
+  },
+  "501": {
+    "inputs": {
+      "text": [
+        "WatermarkMessage",
+        1
+      ],
+      "text2": ""
+    },
+    "class_type": "ShowText|pysssss",
+    "_meta": {
+      "title": "C2PA_Metadata(cbor)"
+    }
+  },
+  "SaveImage-Watermarked": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "filename_prefix": "ComfyuiAPI/flux-HiFi-Watermarked",
+      "images": [
+        "368",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "Save Image"
+    }
+  }
+  ,
+  "SaveImage-Clean": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "filename_prefix": "ComfyuiAPI/flux-HiFi-Clean",
+      "images": [
+        "471",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "Save Image"
+    }
+  }
+}
