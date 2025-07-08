@@ -1,0 +1,246 @@
+{
+  "152": {
+    "inputs": {
+      "unet_name": "flux1-dev-fp8.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Load Diffusion Model"
+    }
+  },
+  "154": {
+    "inputs": {
+      "clip_name1": "t5xxl_fp16.safetensors",
+      "clip_name2": "clip_l.safetensors",
+      "type": "flux"
+    },
+    "class_type": "DualCLIPLoader",
+    "_meta": {
+      "title": "DualCLIPLoader"
+    }
+  },
+  "155": {
+    "inputs": {
+      "vae_name": "ae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE"
+    }
+  },
+  "179": {
+    "inputs": {
+      "key": [
+        "203",
+        0
+      ],
+      "nonce": [
+        "206",
+        0
+      ],
+      "message": [
+        "209",
+        0
+      ],
+      "message_length": 1,
+      "window_size": 1,
+      "watermarkMethod": "DPRW",
+      "latents": [
+        "224",
+        0
+      ]
+    },
+    "class_type": "DPR_Extractor",
+    "_meta": {
+      "title": "DPR Extractor"
+    }
+  },
+  "191": {
+    "inputs": {
+      "text": "",
+      "clip": [
+        "154",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "203": {
+    "inputs": {
+      "string": "5822ff9cce6772f714192f43863f6bad1bf54b78326973897e6b66c3186b77a7"
+    },
+    "class_type": "StringConstant",
+    "_meta": {
+      "title": "Key"
+    }
+  },
+  "206": {
+    "inputs": {
+      "string": "05072fd1c2265f6f2e2a4080a2bfbdd8"
+    },
+    "class_type": "StringConstant",
+    "_meta": {
+      "title": "Nonce"
+    }
+  },
+  "209": {
+    "inputs": {
+      "string": "It's a test to see if this works"
+    },
+    "class_type": "StringConstant",
+    "_meta": {
+      "title": "Message"
+    }
+  },
+  "221": {
+    "inputs": {
+      "scheduler": "ddim_uniform",
+      "steps": 3,
+      "denoise": 1,
+      "model": [
+        "152",
+        0
+      ]
+    },
+    "class_type": "BasicScheduler",
+    "_meta": {
+      "title": "BasicScheduler"
+    }
+  },
+  "223": {
+    "inputs": {
+      "sigmas": [
+        "221",
+        0
+      ]
+    },
+    "class_type": "FlipSigmas",
+    "_meta": {
+      "title": "FlipSigmas"
+    }
+  },
+  "224": {
+    "inputs": {
+      "add_noise": true,
+      "noise_seed": 193498520989702,
+      "cfg": 1,
+      "model": [
+        "152",
+        0
+      ],
+      "positive": [
+        "191",
+        0
+      ],
+      "negative": [
+        "191",
+        0
+      ],
+      "sampler": [
+        "226",
+        0
+      ],
+      "sigmas": [
+        "223",
+        0
+      ],
+      "latent_image": [
+        "227",
+        0
+      ]
+    },
+    "class_type": "SamplerCustom",
+    "_meta": {
+      "title": "SamplerCustom"
+    }
+  },
+  "226": {
+    "inputs": {},
+    "class_type": "SamplerInversedEulerNode",
+    "_meta": {
+      "title": "Inversed Euler Sampler"
+    }
+  },
+  "227": {
+    "inputs": {
+      "pixels": [
+        "317",
+        0
+      ],
+      "vae": [
+        "155",
+        0
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE Encode"
+    }
+  },
+  "239": {
+    "inputs": {
+      "text": [
+        "179",
+        0
+      ],
+      "text2": "Original binary: 0100100101110100001001110111001100100000011000010010000001110100011001010111001101110100001000000111010001101111001000000111001101100101011001010010000001101001011001100010000001110100011010000110100101110011001000000111011101101111011100100110101101110011"
+    },
+    "class_type": "ShowText|pysssss",
+    "_meta": {
+      "title": "OriginalMessage in binary"
+    }
+  },
+  "240": {
+    "inputs": {
+      "text": [
+        "179",
+        1
+      ],
+      "text2": "Extracted binary: 1111000011010001001001110111001100100000011000010110000111110101111001000111001100110100001000000111010001101110100000000011001010100100000100110110101011111001011001100010000001110000011010000110100111110010001000100110011101101111011100100000111100110010"
+    },
+    "class_type": "ShowText|pysssss",
+    "_meta": {
+      "title": "ExtractedMessage in binary"
+    }
+  },
+  "317": {
+    "inputs": {
+      "image": "131741189599_.pic.jpg",
+      "upload": "image"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "345": {
+    "inputs": {
+      "text": [
+        "179",
+        3
+      ],
+      "text2": "Accuracy:"
+    },
+    "class_type": "ShowText|pysssss",
+    "_meta": {
+      "title": "BitAccuracy"
+    }
+  },
+  "346": {
+    "inputs": {
+      "text": [
+        "179",
+        2
+      ],
+      "text2": "Extracted message: "
+    },
+    "class_type": "ShowText|pysssss",
+    "_meta": {
+      "title": "ExtractedMessage"
+    }
+  }
+}
