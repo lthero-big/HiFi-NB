@@ -46,6 +46,7 @@
       "message_length": 1,
       "window_size": 1,
       "watermarkMethod": "DPRW",
+      "resampling_method": "quantile",
       "latents": [
         "224",
         0

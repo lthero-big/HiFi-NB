@@ -89,7 +89,7 @@
   },
   "209": {
     "inputs": {
-      "string": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+      "string": "It's a test to see if this works"
     },
     "class_type": "StringConstant",
     "_meta": {
@@ -126,7 +126,7 @@
   "224": {
     "inputs": {
       "add_noise": true,
-      "noise_seed": 631871105452964,
+      "noise_seed": 193498520989702,
       "cfg": 1,
       "model": [
         "152",
@@ -181,40 +181,40 @@
       "title": "VAE Encode"
     }
   },
-  "317": {
-    "inputs": {
-      "image": "HiFi-NB_Flux-DiffP_3steps_denoise_0.51_Watermakred_Lorem_1024x1024_00005_.png",
-      "upload": "image"
-    },
-    "class_type": "LoadImage",
-    "_meta": {
-      "title": "Load Image"
-    }
-  },
-  "348": {
+  "239": {
     "inputs": {
       "text": [
         "179",
         0
       ],
-      "text2": "Original binary: 01000110010101010101010001010101010100100100010100101111010011000100111101010110010001010010111101010110010011110100110000110011"
+      "text2": "Original binary: 0100100101110100001001110111001100100000011000010010000001110100011001010111001101110100001000000111010001101111001000000111001101100101011001010010000001101001011001100010000001110100011010000110100101110011001000000111011101101111011100100110101101110011"
     },
     "class_type": "ShowText|pysssss",
     "_meta": {
       "title": "OriginalMessageBinary"
     }
   },
-  "349": {
+  "240": {
     "inputs": {
       "text": [
         "179",
         1
       ],
-      "text2": "01001110010101010101010001010101010100100100010100101110010011000000111101010110010001010010111001010110010011110100110010110011"
+      "text2": "Extracted binary: 1111000011010001001001110111001100100000011000010110000111110101111001000111001100110100001000000111010001101110100000000011001010100100000100110110101011111001011001100010000001110000011010000110100111110010001000100110011101101111011100100000111100110010"
     },
     "class_type": "ShowText|pysssss",
     "_meta": {
       "title": "ExtractedMessageBinary"
+    }
+  },
+  "317": {
+    "inputs": {
+      "image": "131741189599_.pic.jpg",
+      "upload": "image"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
     }
   },
   "345": {
@@ -223,7 +223,7 @@
         "179",
         3
       ],
-      "text2": "0.96 (96.09%)"
+      "text2": "Accuracy:"
     },
     "class_type": "ShowText|pysssss",
     "_meta": {
@@ -236,7 +236,7 @@
         "179",
         2
       ],
-      "text2": "NUTURE.L\u000fVE.VOL�"
+      "text2": "Extracted message: "
     },
     "class_type": "ShowText|pysssss",
     "_meta": {
